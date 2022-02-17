@@ -3,7 +3,7 @@ pipeline{
     agent any
 
     environment {
-        registry = "practicechill/tomcat-imran"
+        registry = "practicechill/tom-imran"
         registryCredential = 'dockerhub'
     }
 
@@ -40,8 +40,8 @@ pipeline{
                 scannerHome= tool 'sonarscanner'
             }
 
-            steps{
-                withSonarQubeEnv('sonar-pro'){
+            steps {
+                withSonarQubeEnv('sonar-pro') {
                     sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
                    -Dsonar.projectName=vprofile-repo \
                    -Dsonar.projectVersion=1.0 \
@@ -68,7 +68,7 @@ pipeline{
         stage('Deploy docker image'){
             steps{
                 script {
-                    docker.withRegistry( '',registryCredential){}
+                    docker.withRegistry( '',registryCredential)
                     dockerImage.push("$BUILD_NUMBER")
                     dockerImage.push('latest')
                 }
